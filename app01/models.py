@@ -1,13 +1,18 @@
 from django.db import models
 
 
-class Paper(models.Model):
-    is_base = models.BooleanField(default=False, verbose_name='是否模板')
+class BasePaper(models.Model):
     title = models.CharField(max_length=32, verbose_name='问卷标题')
     question = models.ManyToManyField(to='Question', verbose_name='问题')
-
     def __str__(self):
         return self.title
+
+
+class PaperRecord(models.Model):
+    base = models.ForeignKey(to=BasePaper)
+
+    def __str__(self):
+        return '%s-编号%s'%(self.base.title,self.id)
 
 
 class Question(models.Model):
@@ -24,9 +29,9 @@ class Question(models.Model):
         return self.title
 
 
-class Record(models.Model):
+class AnswerRecord(models.Model):
     """回答记录"""
-    paper = models.ForeignKey(to=Paper, verbose_name='所属问卷')
+    paper = models.ForeignKey(to=PaperRecord, verbose_name='所属问卷')
     question = models.ForeignKey(to=Question, verbose_name='所属问题')
     answer = models.ManyToManyField(to='Answer', verbose_name='答案')
 

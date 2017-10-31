@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from arya.service import sites
 from app01 import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^preview/', views.preview),
+    url(r'', sites.site.urls),
 ]
