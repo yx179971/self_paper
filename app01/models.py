@@ -10,6 +10,8 @@ class BasePaper(models.Model):
 
 class PaperRecord(models.Model):
     base = models.ForeignKey(to=BasePaper)
+    is_pre = models.BooleanField(default=False)
+    is_std = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s-编号%s'%(self.base.title,self.id)

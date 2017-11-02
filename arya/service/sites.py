@@ -447,6 +447,7 @@ class AryaConfig(object):
             url(r'^add/$', self.wrapper(self.add_view), name="%s_%s_add" % app_model_name),
             url(r'^(.+)/delete/$', self.wrapper(self.delete_view), name="%s_%s_delete" % app_model_name),
             url(r'^(.+)/change/$', self.wrapper(self.change_view), name="%s_%s_change" % app_model_name),
+            url(r'^(.+)/detail/$', self.wrapper(self.detail_view), name="%s_%s_detail" % app_model_name),
         ]
         patterns += self.extra_urls()
         return patterns
