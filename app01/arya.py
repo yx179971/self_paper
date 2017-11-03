@@ -85,59 +85,14 @@ class PaperRecordConfig(Detail):
         else:
             return obj
 
-    # def is_pre(self,cl_obj,option):
-    #     base_url = self.detail_url(pk=pk)
-    #     tpl = "<a href='{0}' class='{1}'>{2}</a>"
-    #     param_dict=self.request.GET
-    #     param_dict = copy.deepcopy(param_dict)
-    #     param_dict._mutable = True
-    #     # 全部
-    #     if option.name in param_dict:
-    #         pop_value = param_dict.pop(option.name)
-    #         url = "{0}?{1}".format(base_url, param_dict.urlencode())
-    #         val = tpl.format(url, '', '全部')
-    #         param_dict.setlist(option.name, pop_value)
-    #     else:
-    #         url = "{0}?{1}".format(base_url, param_dict.urlencode())
-    #         val = tpl.format(url, 'active', '全部')
-    #
-    #     # self.param_dict
-    #
-    #     yield mark_safe("<div class='whole'>")
-    #     yield mark_safe(val)
-    #     yield mark_safe("</div>")
-    #
-    #     yield mark_safe("<div class='others'>")
-    #     for obj in [1]:
-    #
-    #         param_dict = copy.deepcopy(param_dict)
-    #         # url上要传递的值
-    #         pk = option.val_func_name
-    #         pk = str(pk)
-    #
-    #         # a标签上显示的内容
-    #         text = option.text_func_name
-    #
-    #         exist = False
-    #         if pk in param_dict.getlist(option.name):
-    #             exist = True
-    #
-    #         if option.is_multi:
-    #             if exist:
-    #                 values = param_dict.getlist(option.name)
-    #                 values.remove(pk)
-    #                 param_dict.setlist(option.name, values)
-    #             else:
-    #                 param_dict.appendlist(option.name, pk)
-    #         else:
-    #             param_dict[option.name] = pk
-    #         url = "{0}?{1}".format(base_url, param_dict.urlencode())
-    #         val = tpl.format(url, 'active' if exist else '', text)
-    #         yield mark_safe(val)
-    #     yield mark_safe("</div>")
+    def is_pre(self, cl_obj, option):
+        return sites.FilterRow(option, cl_obj, ((0, '用户模板'), (1, '模板')), self.request.GET, is_choice=True)
+
+    def is_std(self, cl_obj, option):
+        return sites.FilterRow(option, cl_obj, ((0, '用户答案'), (1, '标准答案')), self.request.GET, is_choice=True)
     list_display = [get_PR_obj, Detail.list_display_show, 'is_pre', 'is_std']
-    # list_filter = [sites.FilterOption(is_pre,False,'模板','1'),]
-    # sites.FilterOption(is_std,False,lambda x:'标准答案' if x.is_pre else '用户答案',),]
+    list_filter = [sites.FilterOption(is_pre, False),
+                   sites.FilterOption(is_std, False), ]
 
 
 sites.site.register(models.PaperRecord, PaperRecordConfig)

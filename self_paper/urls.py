@@ -20,6 +20,6 @@ from app01 import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^preview/', views.preview),
+    url(r'^user_add_paper/', views.user_add_paper),
     url(r'', sites.site.urls),
 ]

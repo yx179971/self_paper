@@ -1,10 +1,7 @@
 from django.shortcuts import render
+from django.forms import ModelForm
+from . import models
 
 
-def preview(request):
-    print(request.GET)
-    return render(request, 'preview.html')
-
-
-def detail(request):
-    return render(request, 'arya/detail.html')
+def user_add_paper(request):
+    return render(request, 'user_add_paper.html', )

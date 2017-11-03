@@ -280,7 +280,6 @@ class AryaConfig(object):
             if k not in fields:
                 continue
             v = params.getlist(k)
-            print(k,v)
             k = "{0}__in".format(k)
             con[k] = v
         return con
